@@ -106,39 +106,39 @@ open class HTTPClient: NetworkClient {
 		
 		let request = buildRequest(method, url: url, payload: payload)
 		
-		Spine.logInfo(.networking, "\(method): \(url)")
+//		Spine.logInfo(.networking, "\(method): \(url)")
 		
-		if Spine.shouldLog(.debug, domain: .networking) {
-			if let httpBody = request.httpBody, let stringRepresentation = NSString(data: httpBody, encoding: String.Encoding.utf8.rawValue) {
-				Spine.logDebug(.networking, stringRepresentation)
-			}
-		}
+//		if Spine.shouldLog(.debug, domain: .networking) {
+//			if let httpBody = request.httpBody, let stringRepresentation = NSString(data: httpBody, encoding: String.Encoding.utf8.rawValue) {
+//				Spine.logDebug(.networking, stringRepresentation)
+//			}
+//		}
 		
 		let task = urlSession.dataTask(with: request, completionHandler: { data, response, networkError in
 			let response = (response as? HTTPURLResponse)
 			let success: Bool
 			
-			if let error = networkError {
+			if networkError != nil {
 				// Network error
-				Spine.logError(.networking, "\(request.url!) - \(error.localizedDescription)")
+//				Spine.logError(.networking, "\(request.url!) - \(error.localizedDescription)")
 				success = false
 				
 			} else if let statusCode = response?.statusCode , 200 ... 299 ~= statusCode {
 				// Success
-				Spine.logInfo(.networking, "\(statusCode): \(request.url!) – (\(data!.count) bytes)")
+//				Spine.logInfo(.networking, "\(statusCode): \(request.url!) – (\(data!.count) bytes)")
 				success = true
 				
 			} else {
 				// API Error
-				Spine.logWarning(.networking, "\(response!.statusCode): \(request.url!) – (\(data!.count) bytes)")
+//				Spine.logWarning(.networking, "\(response!.statusCode): \(request.url!) – (\(data!.count) bytes)")
 				success = false
 			}
 			
-			if Spine.shouldLog(.debug, domain: .networking) {
-				if let data = data, let stringRepresentation = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-					Spine.logDebug(.networking, stringRepresentation)
-				}
-			}
+//			if Spine.shouldLog(.debug, domain: .networking) {
+//				if let data = data, let stringRepresentation = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+//					Spine.logDebug(.networking, stringRepresentation)
+//				}
+//			}
 			
 			self.delegate?.httpClient(self, didPerformRequestWithMethod: method, url: url, success: success)
 			callback(response?.statusCode, data, networkError as NSError?)

@@ -135,7 +135,7 @@ class FetchOperation<T: Resource>: ConcurrentOperation {
 	override func execute() {
 		let url = spine.router.urlForQuery(query)
 		
-		Spine.logInfo(.spine, "Fetching document using URL: \(url)")
+//		Spine.logInfo(.spine, "Fetching document using URL: \(url)")
 		
 		networkClient.request(method: "GET", url: url) { statusCode, responseData, networkError in
 			defer { self.state = .finished }
@@ -181,7 +181,7 @@ class DeleteOperation: ConcurrentOperation {
 	override func execute() {
 		let URL = spine.router.urlForQuery(Query(resource: resource))
 		
-		Spine.logInfo(.spine, "Deleting resource \(resource) using URL: \(URL)")
+//		Spine.logInfo(.spine, "Deleting resource \(resource) using URL: \(URL)")
 		
 		networkClient.request(method: "DELETE", url: URL) { statusCode, responseData, networkError in
 			defer { self.state = .finished }
@@ -273,7 +273,7 @@ class SaveOperation: ConcurrentOperation {
 			return
 		}
 
-		Spine.logInfo(.spine, "Saving resource \(resource) using URL: \(url)")
+//		Spine.logInfo(.spine, "Saving resource \(resource) using URL: \(url)")
 		
 		networkClient.request(method: method, url: url, payload: payload) { statusCode, responseData, networkError in
 			defer { self.state = .finished }
@@ -420,7 +420,7 @@ private class RelationshipReplaceOperation: RelationshipOperation {
 			return
 		}
 
-		Spine.logInfo(.spine, "Replacing relationship \(relationship) using URL: \(url)")
+//		Spine.logInfo(.spine, "Replacing relationship \(relationship) using URL: \(url)")
 		networkClient.request(method: "PATCH", url: url, payload: payload, callback: handleNetworkResponse)
 	}
 }
@@ -465,7 +465,7 @@ private class RelationshipMutateOperation: RelationshipOperation {
 		
 		let url = router.urlForRelationship(relationship, ofResource: resource)
 		let payload = try! serializer.serializeLinkData(relatedResources)
-		Spine.logInfo(.spine, "Mutating relationship \(relationship) using URL: \(url)")
+//		Spine.logInfo(.spine, "Mutating relationship \(relationship) using URL: \(url)")
 		networkClient.request(method: httpMethod, url: url, payload: payload, callback: handleNetworkResponse)
 	}
 }

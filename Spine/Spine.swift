@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import BrightFutures
 
 public typealias Metadata = [String: Any]
 public typealias JSONAPIData = [String: Any]
